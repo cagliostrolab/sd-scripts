@@ -1,0 +1,79 @@
+[sdxl_arguments]
+cache_text_encoder_outputs = false
+no_half_vae = false
+min_timestep = 0
+max_timestep = 1000
+
+[model_arguments]
+pretrained_model_name_or_path = "/workspace/fine_tune/outputs/animagine-xl-3.0/animagine-xl-3.0-step00062000.safetensors"
+vae = "/workspace/vae/sdxl_vae.safetensors"
+
+[dataset_arguments]
+shuffle_caption = true
+debug_dataset = false
+in_json = "/workspace/fine_tune/animagine-xl-3.0_lat.json"
+train_data_dir = "/workspace/train_data/animagine-xl-3.0"
+dataset_repeats = 1
+keep_tokens_separator = "|||"
+resolution = "1024, 1024"
+caption_dropout_rate = 0
+caption_tag_dropout_rate = 0
+caption_dropout_every_n_epochs = 0
+token_warmup_min = 1
+token_warmup_step = 0
+
+[training_arguments]
+output_dir = "/workspace/fine_tune/outputs/animagine-xl-3.0"
+output_name = "animagine-xl-3.0"
+save_precision = "fp16"
+save_every_n_steps = 500
+save_last_n_steps = true
+save_state = true
+save_last_n_steps_state = true
+train_batch_size = 48
+max_token_length = 225
+mem_eff_attn = false
+xformers = true
+sdpa = false
+max_train_steps = 29331
+max_data_loader_n_workers = 8
+persistent_data_loader_workers = true
+gradient_checkpointing = true
+gradient_accumulation_steps = 1
+mixed_precision = "fp16"
+
+[logging_arguments]
+log_with = "wandb"
+log_tracker_name = "animagine-xl-3.0"
+logging_dir = "/workspace/fine_tune/logs"
+
+[sample_prompt_arguments]
+sample_every_n_steps = 100
+sample_sampler = "euler_a"
+
+[saving_arguments]
+save_model_as = "safetensors"
+
+[optimizer_arguments]
+optimizer_type = "AdaFactor"
+learning_rate = 7.5e-6
+train_text_encoder = true
+learning_rate_te1 = 3.75e-6
+learning_rate_te2 = 3.75e-6
+optimizer_args = [ "scale_parameter=False", "relative_step=False", "warmup_init=False",]
+lr_scheduler = "constant_with_warmup"
+lr_warmup_steps = 100
+max_grad_norm = 0
+
+[advanced_training_config]
+resume = "/workspace/fine_tune/outputs/animagine-xl-3.0/animagine-xl-3.0-step00062000-state"
+resume_from_huggingface = false
+
+[save_to_hub_config]
+huggingface_repo_id = ""
+huggingface_repo_type = "model"
+huggingface_path_in_repo = "animagine-xl-3.0_20231224_233136"
+huggingface_token = ""
+async_upload = true
+save_state_to_huggingface = true
+huggingface_repo_visibility = "private"
