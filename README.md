@@ -1,3 +1,5 @@
+### This Repo contain slightly modified sd-scripts used for pretrianing Animagine XL 3.0, however it's recommended to use latest version because the biggest issue for multi gpu training has been fixed in the main repository.
+
 __SDXL is now supported. The sdxl branch has been merged into the main branch. If you update the repository, please follow the upgrade instructions. Also, the version of accelerate has been updated, so please run accelerate config again.__ The documentation for SDXL training is [here](./README.md#sdxl-training).
 
 This repository contains training, generation and utility scripts for Stable Diffusion.
