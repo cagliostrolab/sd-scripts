@@ -6,7 +6,11 @@ from pathlib import Path
 from typing import List
 from tqdm import tqdm
 import numpy as np
-from PIL import Image
+from PIL import Image, ImageFile
+
+ImageFile.LOAD_TRUNCATED_IMAGES = True
+Image.MAX_IMAGE_PIXELS = None
+
 import cv2
 import torch
 from torchvision import transforms

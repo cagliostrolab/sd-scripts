@@ -16,7 +16,10 @@ from library.config_util import (
     ConfigSanitizer,
     BlueprintGenerator,
 )
+from PIL import Image, ImageFile
 
+ImageFile.LOAD_TRUNCATED_IMAGES = True
+Image.MAX_IMAGE_PIXELS = None
 
 def cache_to_disk(args: argparse.Namespace) -> None:
     train_util.prepare_dataset_args(args, True)
