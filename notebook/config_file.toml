@@ -1,0 +1,80 @@
+[sdxl_arguments]
+cache_text_encoder_outputs = false
+no_half_vae = false
+min_timestep = 0
+max_timestep = 1000
+
+[model_arguments]
+pretrained_model_name_or_path = "/workspace/model/animagine-xl-3.0-base.safetensors"
+vae = "/workspace/vae/sdxl_vae.safetensors"
+
+[dataset_arguments]
+shuffle_caption = true
+debug_dataset = false
+in_json = "/workspace/fine_tune/animagine-xl-3.1_lat.json"
+train_data_dir = "/workspace/train_data/animagine-xl-3.1"
+dataset_repeats = 1
+keep_tokens_separator = "|||"
+resolution = "1024, 1024"
+caption_dropout_rate = 0
+caption_tag_dropout_rate = 0
+caption_dropout_every_n_epochs = 0
+token_warmup_min = 1
+token_warmup_step = 0
+
+[training_arguments]
+output_dir = "/workspace/fine_tune/outputs/animagine-xl-3.1"
+output_name = "animagine-xl-3.1"
+save_precision = "fp16"
+save_every_n_steps = 1000
+save_last_n_steps = true
+save_state = true
+save_last_n_steps_state = true
+train_batch_size = 16
+max_token_length = 225
+mem_eff_attn = false
+xformers = true
+sdpa = false
+max_train_epochs = 10
+max_data_loader_n_workers = 8
+persistent_data_loader_workers = true
+gradient_checkpointing = true
+gradient_accumulation_steps = 3
+mixed_precision = "fp16"
+ddp_gradient_as_bucket_view = true
+ddp_static_graph = true
+ddp_timeout = 100000
+
+[logging_arguments]
+log_with = "wandb"
+log_tracker_name = "animagine-xl-3.1"
+logging_dir = "/workspace/fine_tune/logs"
+
+[sample_prompt_arguments]
+sample_every_n_steps = 100
+sample_sampler = "euler_a"
+
+[saving_arguments]
+save_model_as = "safetensors"
+
+[optimizer_arguments]
+optimizer_type = "AdamW"
+learning_rate = 1e-5
+train_text_encoder = true
+optimizer_args = [ "weight_decay=0.1", "betas=0.9,0.99",]
+lr_scheduler = "cosine_with_restarts"
+lr_scheduler_num_cycles = 10
+lr_scheduler_type = "LoraEasyCustomOptimizer.CustomOptimizers.CosineAnnealingWarmupRestarts"
+lr_scheduler_args = [ "min_lr=1e-06", "gamma=0.9", "first_cycle_steps=9099",]
+max_grad_norm = 1.0
+
+[advanced_training_config]
+resume_from_huggingface = false
+
+[save_to_hub_config]
+huggingface_repo_type = "model"
+huggingface_path_in_repo = "model/animagine-xl-3.1_20240320_104513"
+huggingface_token = ""
+async_upload = true
+save_state_to_huggingface = true
+huggingface_repo_visibility = "private"
